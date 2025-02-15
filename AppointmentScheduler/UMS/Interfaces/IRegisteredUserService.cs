@@ -2,7 +2,7 @@
 
 namespace UMS.Interfaces
 {
-    public interface IUserService
+    public interface IRegisteredUserService
     {
         Task<Guid> RegisterUser(User user);
         // ... other user-related methods

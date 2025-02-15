@@ -7,7 +7,7 @@ using UMS.Interfaces;
 
 namespace UMS.Services
 {
-    public class UserService
+    public class UserService : IRegisteredUserService
     {
         private readonly IUserRepository _userRepository;
         private readonly IMediator _mediator;

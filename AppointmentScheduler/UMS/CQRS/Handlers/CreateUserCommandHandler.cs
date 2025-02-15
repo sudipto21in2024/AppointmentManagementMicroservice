@@ -26,7 +26,11 @@ namespace UMS.CQRS.Handlers
             {
                 FirstName = request.FirstName,
                 LastName = request.LastName,
-                Email = request.Email
+                Email = request.Email,
+                Role = request.Role,
+                PasswordHash = CommonBase.Auth.PasswordHasher.HashPassword(request.Password),
+                IsActive = true,
+                IsDeleted = false
             };
 
            await _userRepository.CreateAsync(user);
