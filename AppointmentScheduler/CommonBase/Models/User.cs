@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,13 +9,30 @@ namespace CommonBase.Models
 {
     public class User
     {
-        public Guid Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public string PasswordHash { get; set; }
-        public string Role { get; set; } // "Customer", "Provider", "SuperAdmin"
-        public bool IsActive { get; set; }
-        public bool IsDeleted { get; set; }
+        [Key]
+        public Guid Id { get; set; } = Guid.NewGuid();
+
+        [Required]
+        public string FirstName { get; set; } = null!;
+
+        [Required]
+        public string LastName { get; set; } = null!;
+
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; } = null!;
+
+        [Required]
+        public string PasswordHash { get; set; } = null!;
+
+        [Required]
+        public string Role { get; set; } = null!; // "Customer", "Provider", "SuperAdmin"
+
+        public bool IsActive { get; set; } = true;
+
+        public bool IsDeleted { get; set; } = false;
+
+        // Navigation property for one-to-one relationship with Provider
+        public Provider? Provider { get; set; }
     }
 }
