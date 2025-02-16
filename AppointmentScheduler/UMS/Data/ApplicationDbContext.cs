@@ -15,6 +15,7 @@ namespace UMS.Data
         public DbSet<Provider> Providers { get; set; }
         public DbSet<Service> Services { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -39,6 +40,11 @@ namespace UMS.Data
                 .WithOne(u => u.Provider)
                 .HasForeignKey<Provider>(p => p.UserId)
                 .OnDelete(DeleteBehavior.Restrict); // Prevent deleting a user if a provider exists
+
+            builder.Entity<Service>()
+               .HasOne(s => s.Category)
+               .WithMany()
+               .HasForeignKey(s => s.CategoryId);
 
             // Indexes
             builder.Entity<User>()

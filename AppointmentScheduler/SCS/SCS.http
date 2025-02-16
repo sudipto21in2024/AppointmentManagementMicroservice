@@ -1,0 +1,6 @@
+@SCS_HostAddress = http://localhost:5047
+
+GET {{SCS_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

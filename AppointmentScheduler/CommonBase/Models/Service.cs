@@ -39,5 +39,11 @@ namespace CommonBase.Models
         public Provider Provider { get; set; } = null!;
 
         public bool IsActive { get; set; } = true;
+
+        [Required]
+        public Guid CategoryId { get; set; }
+
+        [ForeignKey("CategoryId")]
+        public Category Category { get; set; } = null!;
     }
 }
