@@ -26,7 +26,7 @@ namespace CommonBase.Infrastructure
                 await _publishEndpoint.Publish(message);
                 _logger.LogInformation($"Published message of type '{typeof(T).Name}'.");
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
                 _logger.LogError(ex, "Failed to publish message.");
                 throw;
@@ -47,7 +47,7 @@ namespace CommonBase.Infrastructure
 
                 _logger.LogInformation($"Subscribed to messages of type '{typeof(T).Name}' on queue '{queueName}'.");
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
                 _logger.LogError(ex, $"Failed to subscribe to messages of type '{typeof(T).Name}'.");
                 throw;
