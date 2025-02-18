@@ -50,6 +50,10 @@ namespace UMS.Data
             builder.Entity<User>()
                 .HasIndex(u => u.Email)
                 .IsUnique(); // Ensure email uniqueness
+
+            builder.Entity<Category>()
+                .HasIndex(u => u.Name) // Ensure category name uniqueness
+                .IsUnique();
         }
     }
 }
