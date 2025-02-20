@@ -42,6 +42,8 @@ namespace AS.CQRS.Handlers
                 AppointmentId = appointmentId,
                 ServiceId = request.ServiceId,
                 // ... any other relevant data
+                //CustomerEmail = customer.Email,
+                //ProviderEmail = provider.Email
             };
 
             await _publishEndpoint.Publish(appointmentCreatedEvent, cancellationToken); // Publish the event

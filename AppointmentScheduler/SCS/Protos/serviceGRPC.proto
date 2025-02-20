@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package ServiceCatalogService;
+
+option csharp_namespace = "ServiceCatalog.Grpc"; // Recommended for C#
+
+message Service {
+  string id = 1; // Guid as string
+  string name = 2;
+  string description = 3;
+  string price = 4; // Use string for precision in currency
+  string providerName = 5; // Use PascalCase for C# compatibility
+  string providerEmail = 6;
+  // ... other service properties
+}
+
+message GetServiceRequest {
+  string id = 1; // Guid as string
+}
+
+service ServiceGRPC {
+  rpc GetService (GetServiceRequest) returns (Service);
+}

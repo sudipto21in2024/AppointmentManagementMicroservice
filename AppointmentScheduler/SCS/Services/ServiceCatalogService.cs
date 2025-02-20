@@ -1,4 +1,5 @@
-﻿using CommonBase.Models;
+﻿using CommonBase.Data;
+using CommonBase.Models;
 using MediatR;
 using SCS.CQRS.Commands;
 using SCS.CQRS.Queries;
@@ -6,12 +7,12 @@ using SCS.Data;
 
 namespace SCS.Services
 {
-    public class ServiceCatalogService : IServiceCatalogService
+    public class ServiceCatalogServiceProvider : IServiceCatalogService
     {
         private readonly ApplicationDbContext _context;
         private readonly IMediator _mediator;
 
-        public ServiceCatalogService(ApplicationDbContext context, IMediator mediator)
+        public ServiceCatalogServiceProvider(ApplicationDbContext context, IMediator mediator)
         {
             _context = context;
             _mediator = mediator;

@@ -4,11 +4,17 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>8cf6ba06-106c-4f59-acba-f546bc501ec6</UserSecretsId>
+    <UserSecretsId>cb76d866-9d68-473e-90aa-b264947ad4dd</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.29.3" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.67.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.69.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="MediatR" Version="12.4.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.2" />
@@ -17,7 +23,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="EventHandlers\" />
+    <Folder Include="Events\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Protos\" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CommonBase\CommonBase.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Protobuf Include="Protos\serviceGRPC.proto" GrpcServices="Server" />
   </ItemGroup>
 
 </Project>

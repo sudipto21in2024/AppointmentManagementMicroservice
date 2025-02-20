@@ -14,5 +14,6 @@ namespace AS.Data.Repositories
         Task UpdateAsync(Appointment appointment);
         Task DeleteAsync(Guid id);
         Task<bool> IsAppointmentSlotBooked(DateTime startTime, DateTime endTime, Guid? excludeAppointmentId = null);
+        Task<List<Appointment>> GetAppointmentsForToday(DateTime today, DateTime tomorrow);
     }
 }

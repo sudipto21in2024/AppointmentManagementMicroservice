@@ -6,6 +6,7 @@ namespace SCS.Data
     {
         //Task<IEnumerable<Service>> GetAllAsync();
         Task<Service?> GetByIdAsync(Guid id);
+        Task<ServiceWithProvider?> GetServiceWithProviderAsync(Guid id);
         Task<Guid> CreateAsync(Service service);
         Task UpdateAsync(Service service);
         Task DeleteAsync(Guid id);

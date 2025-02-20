@@ -68,5 +68,10 @@ namespace AS.Services
             var command = new ConfirmAppointmentCommand { Id = id };
             await _mediator.Send(command);
         }
+
+        public Task<List<Appointment>> GetAppointmentsForToday(DateTime today, DateTime tomorrow)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

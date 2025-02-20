@@ -8,7 +8,7 @@ namespace SCS.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class CategoryController : Controller
+    public class CategoryController : ControllerBase
     {
         private readonly IMediator _mediator;
 

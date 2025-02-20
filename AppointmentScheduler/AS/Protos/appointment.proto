@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package AppointmentService;
+
+import "google/protobuf/timestamp.proto"; // For DateTime
+
+message Appointment {
+   string id = 1;
+   string service_id = 2;
+   string customer_id = 3;
+   google.protobuf.Timestamp start_time = 4;
+   google.protobuf.Timestamp end_time = 5;
+   bool is_confirmed = 6;
+   bool is_cancelled = 7;
+   // ... other appointment properties
+}
+
+message GetAppointmentsForTodayRequest {} // No parameters needed
+
+service AppointmentServiceRPC {  // Renamed to avoid conflict
+  rpc GetAppointmentsForToday (GetAppointmentsForTodayRequest) returns (stream Appointment);
+}

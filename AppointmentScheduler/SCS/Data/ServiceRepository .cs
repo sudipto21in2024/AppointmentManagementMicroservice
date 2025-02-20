@@ -1,4 +1,5 @@
-﻿using CommonBase.Models;
+﻿using CommonBase.Data;
+using CommonBase.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace SCS.Data
@@ -63,6 +64,24 @@ namespace SCS.Data
                 _context.Services.Remove(service);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<ServiceWithProvider> GetServiceWithProviderAsync(Guid id)
+        {
+            return await _context.Services
+                .Include(s => s.Provider) // Assuming you have a Provider navigation property
+                .ThenInclude(u => u.User)
+                .Where(s => s.Id == id)
+                .Select(s => new ServiceWithProvider // Project into DTO
+                {
+                    Id = s.Id,
+                    Name = s.Name,
+                    Description = s.Description,
+                    Price = s.Price,
+                    ProviderName = s.Provider != null ? s.Provider.BusinessName : "N/A", // Default to "N/A" if null
+                    ProviderEmail = s.Provider != null && s.Provider.User != null ? s.Provider.User.Email : "N/A"
+                })
+                .FirstOrDefaultAsync();
         }
     }
 }

@@ -12,12 +12,7 @@ using UMS.CQRS.Handlers;
 using UMS.Data;
 using UMS.Interfaces;
 
-using UMS.CQRS.Handlers;
-using UMS.Data;
-using UMS.Interfaces;
-using UMS.Services;
-using Microsoft.EntityFrameworkCore.SqlServer;
-using Microsoft.Extensions.DependencyInjection;
+using CommonBase.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -36,7 +31,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 // Register application services
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IRegisteredUserService, UserService>();
+builder.Services.AddScoped<IRegisteredUserService, UMS.Services.UserService>();
 
 // Register MediatR
 //builder.Services.AddMediatR(typeof(CreateUserCommandHandler).Assembly);
@@ -74,6 +69,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddAuthorization();
+builder.Services.AddGrpc();
+
 
 var app = builder.Build();
 
@@ -92,5 +89,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapGrpcService<UserManagementService.GRPC.UserService>();
 
 app.Run();

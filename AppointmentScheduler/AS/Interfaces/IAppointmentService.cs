@@ -10,5 +10,6 @@ namespace AS.Interfaces
         Task UpdateAppointmentAsync(Appointment appointment);
         Task CancelAppointmentAsync(Guid id);
         Task ConfirmAppointmentAsync(Guid id);
+        Task<List<Appointment>> GetAppointmentsForToday(DateTime today, DateTime tomorrow);
     }
 }

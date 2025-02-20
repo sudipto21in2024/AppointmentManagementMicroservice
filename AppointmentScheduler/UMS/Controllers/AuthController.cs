@@ -9,7 +9,9 @@ using UMS.CQRS.Commands;
 
 namespace UMS.Controllers
 {
-    public class AuthController : Controller
+    [ApiController]
+    [Route("[controller]")]
+    public class AuthController : ControllerBase
     {
         private readonly IMediator _mediator;
         private readonly IConfiguration _configuration;

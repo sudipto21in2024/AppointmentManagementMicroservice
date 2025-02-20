@@ -7,8 +7,8 @@ using UMS.CQRS.Queries;
 namespace UMS.Controllers
 {
     [ApiController]
-    [Route("[User]")]
-    public class UserController : Controller
+    [Route("[controller]")]
+    public class UserController : ControllerBase
     {
         //private readonly IMediator _mediator;
 

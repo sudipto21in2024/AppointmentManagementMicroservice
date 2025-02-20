@@ -5,11 +5,15 @@ VisualStudioVersion = 17.13.35806.99
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonBase", "CommonBase\CommonBase.csproj", "{2BD4B1EF-83BB-4D31-BE84-25CE56B71762}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UMS", "UMS\UMS.csproj", "{14BF2B6A-8BD0-48C9-BEE9-80BAC6710980}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserManagementService", "UMS\UserManagementService.csproj", "{14BF2B6A-8BD0-48C9-BEE9-80BAC6710980}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SCS", "SCS\SCS.csproj", "{E634FFDE-05A0-4F41-913C-8AA4BAC3F305}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceCatalogService", "SCS\ServiceCatalogService.csproj", "{E634FFDE-05A0-4F41-913C-8AA4BAC3F305}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AS", "AS\AS.csproj", "{6B127215-6C40-4846-A5DE-D0B696D88C43}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppointmentService", "AS\AppointmentService.csproj", "{6B127215-6C40-4846-A5DE-D0B696D88C43}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentService", "PaymentService\PaymentService.csproj", "{81851403-A22A-4F12-BAC3-E7477BD0BE96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationService", "NotificationService\NotificationService.csproj", "{3945DC07-7B3C-44F1-BC68-C1F13C0671C5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{6B127215-6C40-4846-A5DE-D0B696D88C43}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B127215-6C40-4846-A5DE-D0B696D88C43}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B127215-6C40-4846-A5DE-D0B696D88C43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81851403-A22A-4F12-BAC3-E7477BD0BE96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81851403-A22A-4F12-BAC3-E7477BD0BE96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81851403-A22A-4F12-BAC3-E7477BD0BE96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81851403-A22A-4F12-BAC3-E7477BD0BE96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3945DC07-7B3C-44F1-BC68-C1F13C0671C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3945DC07-7B3C-44F1-BC68-C1F13C0671C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3945DC07-7B3C-44F1-BC68-C1F13C0671C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3945DC07-7B3C-44F1-BC68-C1F13C0671C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,5 @@
-﻿using CommonBase.Models;
+﻿using CommonBase.Data;
+using CommonBase.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace AS.Data.Repositories
@@ -87,7 +88,13 @@ namespace AS.Data.Repositories
                     (a.StartTime <= startTime && a.EndTime >= endTime) &&
                     (excludeAppointmentId == null || a.Id != excludeAppointmentId));
         }
+        public async Task<List<Appointment>> GetAppointmentsForToday(DateTime today, DateTime tomorrow)
+        {
+            return await _context.Appointments
+                .Where(a => a.StartTime >= today && a.StartTime < tomorrow)
+                .ToListAsync();
+        }
 
-       
+
     }
 }

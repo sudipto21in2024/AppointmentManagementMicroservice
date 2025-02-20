@@ -1,4 +1,5 @@
-﻿using CommonBase.Models;
+﻿using CommonBase.Data;
+using CommonBase.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace SCS.Data

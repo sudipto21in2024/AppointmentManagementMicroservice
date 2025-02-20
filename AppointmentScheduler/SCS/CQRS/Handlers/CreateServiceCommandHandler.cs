@@ -1,4 +1,5 @@
-﻿using CommonBase.Models;
+﻿using CommonBase.Data;
+using CommonBase.Models;
 using SCS.CQRS.Commands;
 using SCS.Data;
 using SharedLibrary.CQRS.Handlers;
