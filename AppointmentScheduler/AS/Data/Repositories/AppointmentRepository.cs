@@ -18,38 +18,38 @@ namespace AS.Data.Repositories
         //    return await _context.Appointments.ToListAsync();
         //}
      
-        public async Task<IEnumerable<Appointment>> GetAllAsyncint(
-            int pageIndex = 0,
-            int pageSize = 10,
-            DateTime? startDate = null,
-            DateTime? endDate = null,
-            Guid? userId = null)
-        {
-            IQueryable<Appointment> query = _context.Appointments
-                .Include(a => a.Service) // Include related entities if needed
-                .Include(a => a.Customer);
+        //public async Task<IEnumerable<Appointment>> GetAllAsyncint(
+        //    int pageIndex = 0,
+        //    int pageSize = 10,
+        //    DateTime? startDate = null,
+        //    DateTime? endDate = null,
+        //    Guid? userId = null)
+        //{
+        //    IQueryable<Appointment> query = _context.Appointments
+        //        .Include(a => a.Service) // Include related entities if needed
+        //        .Include(a => a.Customer);
 
-            if (startDate.HasValue)
-            {
-                query = query.Where(a => a.StartTime >= startDate.Value);
-            }
+        //    if (startDate.HasValue)
+        //    {
+        //        query = query.Where(a => a.StartTime >= startDate.Value);
+        //    }
 
-            if (endDate.HasValue)
-            {
-                query = query.Where(a => a.EndTime <= endDate.Value);
-            }
+        //    if (endDate.HasValue)
+        //    {
+        //        query = query.Where(a => a.EndTime <= endDate.Value);
+        //    }
 
-            if (userId.HasValue)
-            {
-                query = query.Where(a => a.CustomerId == userId.Value);
-            }
+        //    if (userId.HasValue)
+        //    {
+        //        query = query.Where(a => a.CustomerId == userId.Value);
+        //    }
 
-            return await query
-                .OrderBy(a => a.StartTime) // Order by start time (or any other relevant field)
-                .Skip(pageIndex * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
-        }
+        //    return await query
+        //        .OrderBy(a => a.StartTime) // Order by start time (or any other relevant field)
+        //        .Skip(pageIndex * pageSize)
+        //        .Take(pageSize)
+        //        .ToListAsync();
+        //}
 
         public async Task<Appointment?> GetByIdAsync(Guid id)
         {
@@ -93,6 +93,55 @@ namespace AS.Data.Repositories
             return await _context.Appointments
                 .Where(a => a.StartTime >= today && a.StartTime < tomorrow)
                 .ToListAsync();
+        }
+        public async Task<(List<Appointment>, int)> GetAllAppointmentsWithTotalCountAsync(
+    int pageIndex = 0,
+    int pageSize = 10,
+    DateTime? startDate = null,
+    DateTime? endDate = null,
+    Guid? userId = null,
+    Guid? providerId = null)
+        {
+            IQueryable<Appointment> query = _context.Appointments
+                .Include(a => a.Service)
+                .Include(a => a.Customer);
+
+            if (startDate.HasValue)
+            {
+                query = query.Where(a => a.StartTime >= startDate.Value);
+            }
+
+            if (endDate.HasValue)
+            {
+                query = query.Where(a => a.EndTime <= endDate.Value);
+            }
+
+            if (userId.HasValue)
+            {
+                query = query.Where(a => a.CustomerId == userId.Value);
+            }
+
+            if (providerId.HasValue)
+            {
+                query = query.Join(_context.Services,
+                                appointment => appointment.ServiceId,
+                                service => service.Id,
+                                (appointment, service) => new { appointment, service })
+                            .Where(x => x.service.ProviderId == providerId.Value)
+                            .Select(x => x.appointment);
+            }
+
+            // Calculate total count before paging
+            int totalRecords = await query.CountAsync();
+
+            // Apply paging and get the paged appointments
+            List<Appointment> appointments = await query
+                .OrderBy(a => a.StartTime)
+                .Skip(pageIndex * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return (appointments, totalRecords);
         }
 
 

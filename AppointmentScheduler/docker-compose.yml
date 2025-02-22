@@ -1,0 +1,55 @@
+version: "3.8"
+services:
+  appointment-service:
+    build:
+      context: ./AppointmentService
+      dockerfile: Dockerfile
+    ports:
+      - "5002:5002"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=your-local-sql-server;Database=AppointmentDb;User Id=sa;Password=Your_password;
+  service-catalog-service:
+    build:
+      context: ./ServiceCatalogService
+      dockerfile: Dockerfile
+    ports:
+      - "5003:5003"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=your-local-sql-server;Database=ServiceCatalogDb;User Id=sa;Password=Your_password;
+  user-service:
+    build:
+      context: ./UserService
+      dockerfile: Dockerfile
+    ports:
+      - "5004:5004"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=your-local-sql-server;Database=UserDb;User Id=sa;Password=Your_password;
+  notification-service:
+    build:
+      context: ./NotificationService
+      dockerfile: Dockerfile
+    ports:
+      - "5005:5005"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - AppointmentService__GrpcUrl=https://appointment-service:5002
+      - ServiceCatalogService__GrpcUrl=https://service-catalog-service:5003
+      - UserService__GrpcUrl=https://user-service:5004
+      - MailSettings__SmtpServer=smtp.example.com
+      - MailSettings__Port=587
+      - MailSettings__UseSsl=true
+      - MailSettings__SenderName=YourName
+      - MailSettings__SenderEmail=youremail@example.com
+      - MailSettings__Password=yourpassword
+  payment-service:
+    build:
+      context: ./PaymentService
+      dockerfile: Dockerfile
+    ports:
+      - "5006:5006"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=your-local-sql-server;Database=PaymentDb;User Id=sa;Password=Your_password;

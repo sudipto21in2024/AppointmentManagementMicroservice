@@ -4,11 +4,18 @@ namespace AS.Data.Repositories
 {
     public interface IAppointmentRepository
     {
-        Task<IEnumerable<Appointment>> GetAllAsyncint (int pageIndex = 0,
-            int pageSize = 10,
-            DateTime? startDate = null,
-            DateTime? endDate = null,
-            Guid? userId = null);
+        //Task<IEnumerable<Appointment>> GetAllAsyncint (int pageIndex = 0,
+        //    int pageSize = 10,
+        //    DateTime? startDate = null,
+        //    DateTime? endDate = null,
+        //    Guid? userId = null);
+        Task<(List<Appointment>, int)> GetAllAppointmentsWithTotalCountAsync(
+    int pageIndex = 0,
+    int pageSize = 10,
+    DateTime? startDate = null,
+    DateTime? endDate = null,
+    Guid? userId = null,
+    Guid? providerId = null);
         Task<Appointment?> GetByIdAsync(Guid id);
         Task<Guid> CreateAsync(Appointment appointment);
         Task UpdateAsync(Appointment appointment);

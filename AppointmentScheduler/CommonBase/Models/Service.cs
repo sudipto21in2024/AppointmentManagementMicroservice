@@ -27,6 +27,7 @@ namespace CommonBase.Models
         public string Description { get; set; }
 
         [Required]
+        [Column(TypeName = "decimal(18,2)")] // Explicitly specify decimal type
         public decimal Price { get; set; }
 
         [Required]

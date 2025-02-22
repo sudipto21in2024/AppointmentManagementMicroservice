@@ -14,6 +14,14 @@ namespace CommonBase.Data
             : base(options)
         {
         }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer("DefaultConnection",
+                    x => x.MigrationsAssembly("UserManagementService")); // Ensure migration files go to the main project
+            }
+        }
 
         // Add DbSet properties for all your entities:
         public DbSet<User> Users { get; set; }
@@ -54,6 +62,10 @@ namespace CommonBase.Data
                .HasOne(s => s.Category)
                .WithMany()
                .HasForeignKey(s => s.CategoryId);
+
+            builder.Entity<Service>()
+        .Property(s => s.Price)
+        .HasPrecision(18, 2); // Same effect as "decimal(18,2)"
 
             // Indexes
             builder.Entity<User>()

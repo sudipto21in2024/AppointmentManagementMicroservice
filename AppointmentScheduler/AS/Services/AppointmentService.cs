@@ -2,6 +2,7 @@
 using AS.CQRS.Queries;
 using AS.Data.Repositories;
 using AS.Interfaces;
+using CommonBase.DTO;
 using CommonBase.Models;
 using MediatR;
 
@@ -20,7 +21,7 @@ namespace AS.Services
             _logger = logger;
         }
 
-        public async Task<IEnumerable<Appointment>> GetAllAppointmentsAsync()
+        public async Task<AppointmentResponseDTO> GetAllAppointmentsAsync()
         {
             var query = new GetAllAppointmentsQuery();
             return await _mediator.Send(query);

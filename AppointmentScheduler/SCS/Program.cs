@@ -1,4 +1,5 @@
 using CommonBase.Data;
+using MassTransit;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,6 +11,7 @@ using Serilog;
 using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
 
 // Configure Serilog
 Log.Logger = new LoggerConfiguration()
@@ -34,7 +36,22 @@ builder.Services.AddScoped<IServiceCatalogService, ServiceCatalogServiceProvider
 
 //builder.Services.AddMediatR(typeof(CreateServiceCommandHandler).Assembly);
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateServiceCommandHandler).Assembly));
+builder.Services.AddMassTransit(x =>
+{
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host(configuration["RabbitMQ:HostName"], "/", h =>
+        {
+            h.Username(configuration["RabbitMQ:Username"]);
+            h.Password(configuration["RabbitMQ:Password"]);
+        });
+        cfg.ConfigureEndpoints(context);
+    });
+});
 
+
+builder.Services.AddAuthorization();
+builder.Services.AddGrpc();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -49,3 +66,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.UseAuthentication();
+app.MapGrpcService<ServiceCatalogService.Grpc.ServiceCatalogGrpc>();
+
+app.Run();

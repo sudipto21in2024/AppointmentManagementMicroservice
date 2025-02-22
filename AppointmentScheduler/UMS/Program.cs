@@ -26,8 +26,12 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 // Configure DbContext
+//builder.Services.AddDbContext<ApplicationDbContext>(options =>
+//    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection",
+//        x => x.MigrationsAssembly("YourMainProject")))
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+        x => x.MigrationsAssembly("CommonBase")));
 
 // Register application services
 builder.Services.AddScoped<IUserRepository, UserRepository>();

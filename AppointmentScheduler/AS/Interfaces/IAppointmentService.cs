@@ -1,10 +1,11 @@
-﻿using CommonBase.Models;
+﻿using CommonBase.DTO;
+using CommonBase.Models;
 
 namespace AS.Interfaces
 {
     public interface IAppointmentService
     {
-        Task<IEnumerable<Appointment>> GetAllAppointmentsAsync();
+        Task<AppointmentResponseDTO> GetAllAppointmentsAsync();
         Task<Appointment?> GetAppointmentByIdAsync(Guid id);
         Task<Guid> CreateAppointmentAsync(Appointment appointment);
         Task UpdateAppointmentAsync(Appointment appointment);

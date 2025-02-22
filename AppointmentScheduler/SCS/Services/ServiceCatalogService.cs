@@ -1,4 +1,5 @@
 ﻿using CommonBase.Data;
+using CommonBase.DTO;
 using CommonBase.Models;
 using MediatR;
 using SCS.CQRS.Commands;
@@ -18,7 +19,7 @@ namespace SCS.Services
             _mediator = mediator;
         }
 
-        public async Task<IEnumerable<Service>> GetAllServicesAsync()
+        public async Task<ServiceResponseDTO> GetAllServicesAsync()
         {
             var query = new GetAllServicesQuery();
             return await _mediator.Send(query);

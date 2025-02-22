@@ -21,32 +21,38 @@ namespace AS.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments(
-         int pageIndex = 0,
-         int pageSize = 10,
-         DateTime? startDate = null,
-         DateTime? endDate = null,
-         Guid? userId = null)
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments(
+        // int pageIndex = 0,
+        // int pageSize = 10,
+        // DateTime? startDate = null,
+        // DateTime? endDate = null,
+        // Guid? userId = null)
+        //{
+        //    try
+        //    {
+        //        var query = new GetAllAppointmentsQuery
+        //        {
+        //            PageIndex = pageIndex,
+        //            PageSize = pageSize,
+        //            StartDate = startDate,
+        //            EndDate = endDate,
+        //            UserId = userId
+        //        };
+        //        var appointments = await _mediator.Send(query);
+        //        return Ok(appointments);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "An error occurred while getting appointments.");
+        //        return StatusCode(500, "Internal Server Error");
+        //    }
+        //}
+        [HttpGet("appointments")]
+        public async Task<IActionResult> GetAllAppointments([FromQuery] GetAllAppointmentsQuery query)
         {
-            try
-            {
-                var query = new GetAllAppointmentsQuery
-                {
-                    PageIndex = pageIndex,
-                    PageSize = pageSize,
-                    StartDate = startDate,
-                    EndDate = endDate,
-                    UserId = userId
-                };
-                var appointments = await _mediator.Send(query);
-                return Ok(appointments);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred while getting appointments.");
-                return StatusCode(500, "Internal Server Error");
-            }
+            var result = await _mediator.Send(query);
+            return Ok(result); // Return the AppointmentResponseDTO
         }
 
         [HttpGet("{id}")]

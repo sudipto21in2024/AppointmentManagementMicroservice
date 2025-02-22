@@ -1,0 +1,79 @@
+﻿Steps to Run Migrations for ApplicationDbContext in CommonBase
+In the CommonBase project (where ApplicationDbContext is defined), install the required NuGet package
+
+dotnet add package Microsoft.EntityFrameworkCore.Design
+
+Step 2: Ensure Your Startup Project References CommonBase
+Your main application (API, Console, or Web app) where migrations will run must reference the CommonBase project.
+
+In YourMainProject.csproj, add:
+<ItemGroup>
+    <ProjectReference Include="..\CommonBase\CommonBase.csproj" />
+</ItemGroup>
+
+Step 3: Set the Migration Assembly in ApplicationDbContext
+Since migrations will be executed from another project, specify the migration assembly explicitly inside ApplicationDbContext:
+
+using Microsoft.EntityFrameworkCore;
+
+namespace CommonBase
+{
+    public class ApplicationDbContext : DbContext
+    {
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
+            : base(options)
+        {
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer("YourConnectionString",
+                    x => x.MigrationsAssembly("YourMainProject")); // Ensure migration files go to the main project
+            }
+        }
+
+        public DbSet<YourEntity> YourEntities { get; set; }
+    }
+}
+
+Replace "YourMainProject" with the actual name of your API or main project where migrations will be stored.
+
+Step 4: Add ApplicationDbContext in Program.cs
+In Program.cs of your API project
+
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+        x => x.MigrationsAssembly("YourMainProject"))); // Ensure correct assembly for migrations
+
+
+Step 5: Run Migrations from the Main Project
+Since ApplicationDbContext is inside CommonBase, you must run migrations from your main project (API or another entry project).
+
+Run the following command from the main project directory (not CommonBase):
+
+dotnet ef migrations add InitialCreate --project CommonBase --startup-project YourMainProject
+
+--project CommonBase → Points to the project containing ApplicationDbContext.
+--startup-project YourMainProject → Specifies the entry project (API, console app, etc.).
+InitialCreate → The migration name.
+
+Step 6: Apply Migrations to the Database
+dotnet ef database update --project CommonBase --startup-project YourMainProject
+
+
+Step	Action
+1	Install Microsoft.EntityFrameworkCore.Design in CommonBase.
+2	Ensure YourMainProject references CommonBase.
+3	Configure ApplicationDbContext to specify MigrationsAssembly.
+4	Register ApplicationDbContext in Program.cs (Main API project).
+5	Run migrations from the main project using dotnet ef migrations add.
+6	Apply migrations using dotnet ef database update.
+Now, your migrations will be correctly applied even though ApplicationDbContext is inside CommonBase! 
+
+
+dotnet ef migrations add InitialCreate --project ../CommonBase/CommonBase.csproj --startup-project ./UserManagementService.csproj
+
+dotnet ef database update --project ../CommonBase/CommonBase.csproj --startup-project ./UserManagementService.csproj
+

@@ -2,7 +2,9 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SCS.CQRS.Commands;
+using SCS.CQRS.Handlers;
 using SCS.CQRS.Queries;
+using ServiceCatalogService.CQRS.Handlers;
 
 namespace SCS.Controllers
 {
@@ -40,6 +42,20 @@ namespace SCS.Controllers
             };
             var services = await _mediator.Send(query);
             return Ok(services);
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllServices([FromQuery] GetAllServicesQuery query)
+        {
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
+
+        [HttpGet("dropdown")]
+        public async Task<IActionResult> GetServiceDropdown()
+        {
+            var query = new GetServiceDropdownQuery();
+            var result = await _mediator.Send(query);
+            return Ok(result);
         }
 
         [HttpGet("{id}")]
